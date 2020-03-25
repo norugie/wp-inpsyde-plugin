@@ -90,6 +90,7 @@
         <!-- Asynchronus call for user info -->
         <script>
             function displayUserInfo(e){
+                // clear div fields per new onclick
                 $("#data-indicator").empty();
                 $("#user-name").empty();
                 $("#user-username").empty();
@@ -99,9 +100,10 @@
                 $("#user-company").empty();
                 $("#user-company-catchphrase").empty();
 
-                const id = $(e).data("id");
-                const apiURL = "https://jsonplaceholder.typicode.com/users/" + id;
+                const id = $(e).data("id"); // user id
+                const apiURL = "https://jsonplaceholder.typicode.com/users/" + id; // api link to user info
 
+                // fetch user info
                 fetch(apiURL)
                 .then(response => response.json())
                 .then($("#data-indicator").append("Fetching user data. Please wait. . ."))
@@ -116,7 +118,7 @@
                     $("#user-company").append("<b>Company: </b>" + response["company"]["name"]);
                     $("#user-company-catchphrase").append("<b>Company Catchphrase: </b>" + response["company"]["catchPhrase"]);
                 })
-                .catch(() => console.log("Can’t access " + apiURL + " response."));
+                .catch(() => $("#data-indicator").replaceWith("<div id='data-indicator'>Can’t access " + apiURL + " response.</div>"));
             }
         </script>
     </body>
