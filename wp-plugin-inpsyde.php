@@ -33,19 +33,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 defined('ABSPATH') or die('You are restricted from accessing that page.');
 
-class WPPluginInpSyde
+class WPPluginInpsyde
 {
     function __construct(){
-        // activate
-        register_activation_hook(__FILE__, array($this, 'activate'));
-        register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+        register_activation_hook(__FILE__, array($this, 'activate')); // activate
+        register_deactivation_hook(__FILE__, array($this, 'deactivate')); // deactivate
         
         add_action('query_vars', array($this, 'set_query_var'));
         add_filter('template_include', array($this, 'plugin_include_template'));
     }
 
     function activate(){
-        add_rewrite_rule('^custom$','index.php?custom_page=1','top');
+        add_rewrite_rule('^custom$','index.php?custom_page=1','top'); // rewrite custom_page to custom
         flush_rewrite_rules();
     }
 
@@ -54,7 +53,7 @@ class WPPluginInpSyde
     }
 
     function set_query_var($varURL) {
-        array_push($varURL, 'custom_page'); // ref url redirected to in add rewrite rule
+        array_push($varURL, 'custom_page'); // add custom_page as a variable for current url
         return $varURL;
     }
 
@@ -64,9 +63,19 @@ class WPPluginInpSyde
         }    
         return $template;    
     }
+
+    function consume_api(){
+        $apiURL = "https://jsonplaceholder.typicode.com/users"; // call api
+        // setup api for json decode
+        $client = curl_init($apiURL);
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($client);
+        // return variable for json
+        $result = json_decode($response, true);
+        return $result;
+    }
 }
 
-if(class_exists('WPPluginInpsyde')){
-    $wpPluginInpsyde = new WPPluginInpsyde();
-}
+if(class_exists('WPPluginInpsyde')) $wpPluginInpsyde = new WPPluginInpsyde();
+
 
