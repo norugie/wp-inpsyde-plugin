@@ -27,7 +27,7 @@
             .user-info-div {
                 width: 600px;
                 margin: 20px auto;
-                padding: 5px;
+                padding: 10px;
                 border: 1px solid #ddd;
                 overflow-x: auto;
             }
@@ -38,8 +38,12 @@
                 grid-gap: 10px;
             }
 
-            #user-address {
+            #data-indicator, #user-address {
                 grid-column:  1 / span 2;
+            }
+
+            #data-indicator {
+                text-align: center;
             }
         </style>
     </head>
@@ -65,6 +69,7 @@
         <div class="user-info-div">
             <center><h3>User Information</h3></center>
             <div class="grid-container">
+                <div id="data-indicator"></div>
                 <div id="user-name"></div>
                 <div id="user-username"></div>
                 <div id="user-email"></div>  
@@ -85,13 +90,33 @@
         <!-- Asynchronus call for user info -->
         <script>
             function displayUserInfo(e){
+                $("#data-indicator").empty();
+                $("#user-name").empty();
+                $("#user-username").empty();
+                $("#user-email").empty();
+                $("#user-address").empty();
+                $("#user-phone").empty();
+                $("#user-company").empty();
+                $("#user-company-catchphrase").empty();
+
                 const id = $(e).data("id");
                 const apiURL = "https://jsonplaceholder.typicode.com/users/" + id;
 
                 fetch(apiURL)
-                .then(response => response.text())
-                .then(contents => console.log(contents))
-                .catch(() => console.log("Can’t access " + apiURL + " response. Blocked by browser?"))
+                .then(response => response.json())
+                .then($("#data-indicator").append("Fetching user data. Please wait. . ."))
+                .then(function(response){
+                    $("#data-indicator").empty();
+                    $("#data-indicator").append("Data has been fetched successfully!");
+                    $("#user-name").append("<b>Name: </b>" + response["name"]);
+                    $("#user-username").append("<b>Username: </b>" + response["username"]);
+                    $("#user-email").append("<b>Email Address: </b>" + response["email"]);
+                    $("#user-address").append("<b>Address: </b>" + response["address"]["suite"] + ", " + response["address"]["street"] + ", " + response["address"]["city"] + " " + response["address"]["zipcode"]);
+                    $("#user-phone").append("<b>Phone Number: </b>" + response["phone"]);
+                    $("#user-company").append("<b>Company: </b>" + response["company"]["name"]);
+                    $("#user-company-catchphrase").append("<b>Company Catchphrase: </b>" + response["company"]["catchPhrase"]);
+                })
+                .catch(() => console.log("Can’t access " + apiURL + " response."));
             }
         </script>
     </body>
