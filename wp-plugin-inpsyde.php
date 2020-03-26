@@ -30,56 +30,64 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 defined('ABSPATH') or die('You are restricted from accessing that page.');
 
 class WPPluginInpsyde
 {
-    public function __construct(){      
-        add_action('query_vars', array($this, 'set_query_var'));
-        add_filter('template_include', array($this, 'plugin_include_template'));
+    public function __construct()
+    {
+        add_action('query_vars', [$this, 'setQueryVar']);
+        add_filter('template_include', [$this, 'pluginIncludeTemplate']);
     }
 
-    public function activate(){
-        add_rewrite_rule('^userlist$','index.php?custom_user_page=1','top'); // rewrite custom_user_page to userlist
+    public function activate()
+    {
+        add_rewrite_rule('^userlist$', 'index.php?custom_user_page=1', 'top'); // rewrite custom_user_page to userlist
         flush_rewrite_rules();
     }
 
-    public function deactivate(){
+    public function deactivate()
+    {
         flush_rewrite_rules();
     }
 
-    public function set_query_var($varURL) {
-        array_push($varURL, 'custom_user_page'); // add custom_user_page as a variable for current url
-        return $varURL;
+    public function setQueryVar($varUrl)
+    {
+        array_push($varUrl, 'custom_user_page'); // add custom_user_page as a variable for current url
+        return $varUrl;
     }
 
-    public function plugin_include_template($template){
-        if(get_query_var('custom_user_page')){
-            $template = plugin_dir_path( __FILE__ ) . 'templates/custom.php';;
-        }    
-        return $template;    
+    public function pluginIncludeTemplate($template)
+    {
+        if (get_query_var('custom_user_page'))
+            $template = plugin_dir_path(__FILE__) . 'templates/custom.php';
+        return $template;
     }
 
-    public function consume_api(){
-        $apiURL = "https://jsonplaceholder.typicode.com/users"; // call api
+    public function consumeApi()
+    {
+        $apiUrl = "https://jsonplaceholder.typicode.com/users"; // call api
         // setup api for json decode
-        $client = curl_init($apiURL);
+        $client = curl_init($apiUrl);
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($client);
-        $httpcode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+        $httpCode = curl_getinfo($client, CURLINFO_HTTP_CODE);
         
         // check if returned http status is 200
-        if($httpcode == "200"){
+        if ($httpCode === 200) {
             // return variable for json
             $result = json_decode($response, true);
-        } else $result = NULL; // set results to null
+        } else {
+            $result = null; // set results to null
+        }
         
         return $result;
     }
 }
 
-if(class_exists('WPPluginInpsyde')) $wpPluginInpsyde = new WPPluginInpsyde();
+if (class_exists('WPPluginInpsyde')) {
+    $wpPluginInpsyde = new WPPluginInpsyde();
+}
 
-register_activation_hook(__FILE__, array($wpPluginInpsyde, 'activate')); // activate
-register_deactivation_hook(__FILE__, array($wpPluginInpsyde, 'deactivate')); // deactivate
+register_activation_hook(__FILE__, [$wpPluginInpsyde, 'activate']); // activate
+register_deactivation_hook(__FILE__, [$wpPluginInpsyde, 'deactivate']); // deactivate
