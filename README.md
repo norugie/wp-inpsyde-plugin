@@ -1,29 +1,8 @@
-# README #
+# WORDPRESS PLUGIN SAMPLE #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Plugin Summary ###
 
-### What is this repository for? ###
+This WordPress plugin lets the user access a list of users and user information with data fetched from the API `https://jsonplaceholder.typicode.com/users`. Once the plugin is installed and activated through the WordPress admin panel, the user can navigate to `domain.com/custom`, where they can see a table list of users and click on each user to see more information.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* **Version:** 1.0.0
+* **Author:** Rugie Ann Barrameda

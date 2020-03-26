@@ -11,7 +11,7 @@ Description: A WP plugin for code review
 Version: 1.0.0
 Author: Rugie Ann Barrameda
 Author URI: https://norugie.github.io
-License: GPLv3
+License: GNU GPLv3
 Text Domain: wp-plugin-inpsyde
 */
 
