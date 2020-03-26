@@ -56,6 +56,11 @@
                     <th>Username</th>
                     <th>Email Address</th>
                 </tr>
+                <?php if(empty($result) && !isset($result)){ ?>
+                <tr>
+                    <td colspan="4"><center>There are no users found for this list.</center></td>
+                </tr>
+                <?php } ?>
                 <?php foreach($results as $result): ?>
                 <tr>
                     <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>" onclick="displayUserInfo(this)"><?php echo $result['id']; ?></a></td>
@@ -108,8 +113,10 @@
                 .then(response => response.json())
                 .then($("#data-indicator").append("Fetching user data. Please wait. . ."))
                 .then(function(response){
-                    $("#data-indicator").empty();
-                    $("#data-indicator").append("Data has been fetched successfully!");
+                    $("#data-indicator").empty(); // empty data-indicator
+                    $("#data-indicator").append("Data has been fetched successfully!"); // append success message
+
+                    // append user data
                     $("#user-name").append("<b>Name: </b>" + response["name"]);
                     $("#user-username").append("<b>Username: </b>" + response["username"]);
                     $("#user-email").append("<b>Email Address: </b>" + response["email"]);
@@ -118,7 +125,7 @@
                     $("#user-company").append("<b>Company: </b>" + response["company"]["name"]);
                     $("#user-company-catchphrase").append("<b>Company Catchphrase: </b>" + response["company"]["catchPhrase"]);
                 })
-                .catch(() => $("#data-indicator").replaceWith("<div id='data-indicator'>Can’t access " + apiURL + " response.</div>"));
+                .catch(() => $("#data-indicator").replaceWith("<div id='data-indicator'>Can’t access " + apiURL + " response.</div>")); // replace data-indicator of with failure message on catch 
             }
         </script>
     </body>

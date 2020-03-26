@@ -67,8 +67,14 @@ class WPPluginInpsyde
         $client = curl_init($apiURL);
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($client);
-        // return variable for json
-        $result = json_decode($response, true);
+        $httpcode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+        
+        // check if returned http status is 200
+        if($httpcode == "200"){
+            // return variable for json
+            $result = json_decode($response, true);
+        } else $result = NULL; // set results to null
+        
         return $result;
     }
 }
