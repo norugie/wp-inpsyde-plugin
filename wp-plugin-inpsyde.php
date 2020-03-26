@@ -7,7 +7,7 @@
 /*
 Plugin Name: WP Plugin Test
 Plugin URI:
-Description: A WP plugin for code review
+Description: This WordPress plugin lets the user access a list of users and user information from an API. Once the plugin is installed and activated through the WordPress admin panel, the user can navigate to domain.com/userlist.
 Version: 1.0.0
 Author: Rugie Ann Barrameda
 Author URI: https://norugie.github.io
@@ -41,7 +41,7 @@ class WPPluginInpsyde
     }
 
     public function activate(){
-        add_rewrite_rule('^custom$','index.php?custom_page=1','top'); // rewrite custom_page to custom
+        add_rewrite_rule('^userlist$','index.php?custom_user_page=1','top'); // rewrite custom_user_page to userlist
         flush_rewrite_rules();
     }
 
@@ -50,12 +50,12 @@ class WPPluginInpsyde
     }
 
     public function set_query_var($varURL) {
-        array_push($varURL, 'custom_page'); // add custom_page as a variable for current url
+        array_push($varURL, 'custom_user_page'); // add custom_user_page as a variable for current url
         return $varURL;
     }
 
     public function plugin_include_template($template){
-        if(get_query_var('custom_page')){
+        if(get_query_var('custom_user_page')){
             $template = plugin_dir_path( __FILE__ ) . 'templates/custom.php';;
         }    
         return $template;    
