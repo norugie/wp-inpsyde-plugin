@@ -35,33 +35,33 @@ defined('ABSPATH') or die('You are restricted from accessing that page.');
 
 class WPPluginInpsyde
 {
-    function __construct(){      
+    public function __construct(){      
         add_action('query_vars', array($this, 'set_query_var'));
         add_filter('template_include', array($this, 'plugin_include_template'));
     }
 
-    function activate(){
+    public function activate(){
         add_rewrite_rule('^custom$','index.php?custom_page=1','top'); // rewrite custom_page to custom
         flush_rewrite_rules();
     }
 
-    function deactivate(){
+    public function deactivate(){
         flush_rewrite_rules();
     }
 
-    function set_query_var($varURL) {
+    public function set_query_var($varURL) {
         array_push($varURL, 'custom_page'); // add custom_page as a variable for current url
         return $varURL;
     }
 
-    function plugin_include_template($template){
+    public function plugin_include_template($template){
         if(get_query_var('custom_page')){
             $template = plugin_dir_path( __FILE__ ) . 'templates/custom.php';;
         }    
         return $template;    
     }
 
-    function consume_api(){
+    public function consume_api(){
         $apiURL = "https://jsonplaceholder.typicode.com/users"; // call api
         // setup api for json decode
         $client = curl_init($apiURL);
