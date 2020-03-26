@@ -35,10 +35,7 @@ defined('ABSPATH') or die('You are restricted from accessing that page.');
 
 class WPPluginInpsyde
 {
-    function __construct(){
-        register_activation_hook(__FILE__, array($this, 'activate')); // activate
-        register_deactivation_hook(__FILE__, array($this, 'deactivate')); // deactivate
-        
+    function __construct(){      
         add_action('query_vars', array($this, 'set_query_var'));
         add_filter('template_include', array($this, 'plugin_include_template'));
     }
@@ -78,4 +75,5 @@ class WPPluginInpsyde
 
 if(class_exists('WPPluginInpsyde')) $wpPluginInpsyde = new WPPluginInpsyde();
 
-
+register_activation_hook(__FILE__, array($wpPluginInpsyde, 'activate')); // activate
+register_deactivation_hook(__FILE__, array($wpPluginInpsyde, 'deactivate')); // deactivate
