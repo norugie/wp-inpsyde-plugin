@@ -17,7 +17,8 @@ This WordPress plugin lets the user access a list of users and user information 
 ### INSTALLATION GUIDE ###
 * Navigate to your WordPress installation's plugins folder.
 * From the plugins folder, clone the plugin repository using `git clone https://norugie@bitbucket.org/norugie/wp-plugin-inpsyde.git`.
-* Use `composer install` or `composer update` to install dependencies
+* Use `composer install` or `composer update` command to install dependencies
 
 ### NOTES ON UNIT TESTING ###
 * When using PHPUnit to do a unit test, make sure that the PHP version you're using is PHP 7.2 and above.
+* From the root folder of the plugin, use `vendor/bin/phpunit` to start using PHPUnit.
