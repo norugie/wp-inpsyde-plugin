@@ -29,7 +29,7 @@
                 margin: 20px auto;
                 padding: 10px;
                 border: 1px solid #ddd;
-                overflow-x: auto;
+                display: none;
             }
 
             .grid-container {
@@ -56,19 +56,20 @@
                     <th>Username</th>
                     <th>Email Address</th>
                 </tr>
-                <?php if(empty($result) && !isset($result)){ ?>
-                <tr>
-                    <td colspan="4"><center>There are no users found for this list.</center></td>
-                </tr>
-                <?php } ?>
-                <?php foreach($results as $result): ?>
-                <tr>
-                    <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>" onclick="displayUserInfo(this)"><?php echo $result['id']; ?></a></td>
-                    <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a></td>
-                    <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>"><?php echo $result['username']; ?></a></td>
-                    <td><?php echo $result['email']; ?></td>
-                </tr>
-                <?php endforeach; ?>
+                <?php if(empty($results) && !isset($results)){ ?>
+                    <tr>
+                        <td colspan="4"><center>There are no users found for this list.</center></td>
+                    </tr>
+                <?php } else { 
+                     foreach($results as $result): ?>
+                        <tr>
+                            <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>" onclick="displayUserInfo(this)"><?php echo $result['id']; ?></a></td>
+                            <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>" onclick="displayUserInfo(this)"><?php echo $result['name']; ?></a></td>
+                            <td><a href="javascript: void(0)" data-id="<?php echo $result['id']; ?>" onclick="displayUserInfo(this)"><?php echo $result['username']; ?></a></td>
+                            <td><?php echo $result['email']; ?></td>
+                        </tr>
+                    <?php endforeach; 
+                } ?>
             </table>
         </div>
         <div class="user-info-div">
@@ -95,6 +96,10 @@
         <!-- Asynchronus call for user info -->
         <script>
             function displayUserInfo(e){
+                // show user information div
+                if($(".user-info-div").css("display") == "none")
+                    $(".user-info-div").css("display", "block");
+
                 // clear div fields per new onclick
                 $("#data-indicator").empty();
                 $("#user-name").empty();
