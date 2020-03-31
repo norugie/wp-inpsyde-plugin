@@ -16,7 +16,7 @@ This WordPress plugin lets the user access a list of users and user information 
 
 ### INSTALLATION GUIDE ###
 * Navigate to your WordPress installation's plugins folder.
-* From the plugins folder, clone the plugin repository using `git clone https://norugie@bitbucket.org/norugie/wp-plugin-inpsyde.git`.
+* From the plugins folder, clone the plugin repository using `git clone https://github.com/norugie/wp-inpsyde-plugin.git`.
 * Use `composer install` or `composer update` command to install dependencies
 
 ### NOTES ON UNIT TESTING ###
